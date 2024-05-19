@@ -1,6 +1,6 @@
 package com.dictionaryapp.service;
 
-import com.dictionaryapp.model.dto.LanguageNameEnum;
+import com.dictionaryapp.model.entity.LanguageNameEnum;
 import com.dictionaryapp.model.entity.Language;
 import com.dictionaryapp.repo.LanguageRepository;
 import org.springframework.stereotype.Service;

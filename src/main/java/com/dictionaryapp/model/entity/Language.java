@@ -1,8 +1,6 @@
 package com.dictionaryapp.model.entity;
 
-import com.dictionaryapp.model.dto.LanguageNameEnum;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
