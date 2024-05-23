@@ -26,6 +26,9 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login() {
+        if (this.userService.isLoggedIn()) {
+            return "redirect:/home";
+        }
         return "/login";
     }
 
@@ -44,5 +47,4 @@ public class LoginController {
         this.userService.login(loginModel);
         return "redirect:/home";
     }
-
 }

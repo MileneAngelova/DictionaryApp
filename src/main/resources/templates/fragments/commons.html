@@ -11,25 +11,27 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg bg-nav rounded " >
-        <a class="nav-link my-text-color active h5 " href="/index">Dictionary App</a>
-        <a class="nav-link my-text-color active h5  " href="/word/add">Add Word</a>
-
+    <nav class="navbar navbar-expand-lg bg-nav rounded" >
+        <a class="nav-link my-text-color active h5 " th:unless="${@currentUser.isLoggedIn()}" href="/">Dictionary App</a>
+        <a class="nav-link my-text-color active h5" th:if="${@currentUser.isLoggedIn()}" href="/home">Home</a>
+        <a class="nav-link my-text-color active h5" th:if="${@currentUser.isLoggedIn()}" href="/word/add">Add Word</a>
         <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
             <ul class="navbar-nav row">
                 <li class="nav-item col-md-4">
-                    <a class="nav-link active h5 my-text-color" href="/login">Login</a>
+                    <a class="nav-link active h5 my-text-color" th:unless="${@currentUser.isLoggedIn()}" href="/login">Login</a>
                 </li>
 
                 <li class="nav-item col-md-4">
-                    <a class="nav-link my-text-color active h5 " href="/register">Register</a>
+                    <a class="nav-link my-text-color active h5 " th:unless="${@currentUser.isLoggedIn()}" href="/register">Register</a>
                 </li>
 
-                    <a class="nav-link h5 my-text-color">Welcome,
+                    <a class="nav-link h5 my-text-color"
+                    th:if="${@currentUser.isLoggedIn()}"
+                    >Welcome,
                     <span th:text="${@currentUser.username}"></span>
                     </a>
                 <li class="nav-item col-md-4">
-                    <a class="nav-link my-text-color active h5 " th:href="@{logout}">Logout</a>
+                    <a class="nav-link my-text-color active h5 " th:if="${@currentUser.isLoggedIn()}" href="/logout">Logout</a>
                 </li>
             </ul>
         </div>

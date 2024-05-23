@@ -3,16 +3,27 @@ package com.dictionaryapp.service;
 import com.dictionaryapp.model.entity.LanguageNameEnum;
 import com.dictionaryapp.model.entity.Language;
 import com.dictionaryapp.repo.LanguageRepository;
+import com.dictionaryapp.repo.WordRepository;
+import com.dictionaryapp.session.CurrentUser;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
 public class LanguageService {
     private final LanguageRepository languageRepository;
+    private final CurrentUser currentUser;
 
-    public LanguageService(LanguageRepository languageRepository) {
+    public LanguageService(LanguageRepository languageRepository, CurrentUser currentUser, WordRepository wordRepository) {
         this.languageRepository = languageRepository;
+        this.currentUser = currentUser;
+        this.wordRepository = wordRepository;
     }
+
+
+    private final WordRepository wordRepository;
 
     public void seedLanguages() {
         if (this.languageRepository.count() == 0) {
@@ -33,4 +44,9 @@ public class LanguageService {
             }
         }
     }
+//
+//    public List<LanguageNameEnum> getAllLanguages() {
+//        return currentUser.getWords().stream().map(w -> w.getLanguage().getName()).collect(Collectors.toList());
+//    }
+
 }

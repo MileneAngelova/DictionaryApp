@@ -3,6 +3,7 @@ package com.dictionaryapp.model.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PastOrPresent;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Entity
@@ -20,7 +21,7 @@ public class Word {
 
     @Column(name = "input_date", nullable = false)
     @PastOrPresent
-    private LocalDate inputDate;
+    private Instant inputDate;
 
 
     @ManyToOne(targetEntity = Language.class)
@@ -68,11 +69,11 @@ public class Word {
         return this;
     }
 
-    public LocalDate getInputDate() {
+    public Instant getInputDate() {
         return inputDate;
     }
 
-    public Word setInputDate(LocalDate inputDate) {
+    public Word setInputDate(Instant inputDate) {
         this.inputDate = inputDate;
         return this;
     }

@@ -61,4 +61,8 @@ public class Language {
         this.words = words;
         return this;
     }
+
+    public void addWord(Word word) {
+        this.words.add(word);
+    }
 }

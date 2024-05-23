@@ -54,6 +54,5 @@ public class UserService {
 
     public void logout() {
         this.currentUser.logout();
-        this.currentUser.setLoggedIn(false);
     }
 }

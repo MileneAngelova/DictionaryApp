@@ -1,15 +1,23 @@
 package com.dictionaryapp.session;
 
+import com.dictionaryapp.model.dto.WordDTO;
+import com.dictionaryapp.model.entity.Word;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
+
+import java.util.Set;
 
 @Component
 @SessionScope
 public class CurrentUser {
     private Long id;
+
     private String username;
 
     private boolean isLoggedIn;
+
+    private Set<Word> words;
+
 
     public Long getId() {
         return id;
@@ -39,8 +47,17 @@ public class CurrentUser {
     }
 
     public void logout() {
-        this.isLoggedIn = false;
         this.id = null;
         this.username = null;
+        this.isLoggedIn = false;
+    }
+
+    public Set<Word> getWords() {
+        return words;
+    }
+
+    public CurrentUser setWords(Set<Word> words) {
+        this.words = words;
+        return this;
     }
 }
