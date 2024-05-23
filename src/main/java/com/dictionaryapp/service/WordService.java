@@ -1,71 +1,104 @@
 package com.dictionaryapp.service;
 
 import com.dictionaryapp.model.dto.AddWordDTO;
-import com.dictionaryapp.model.dto.WordDTO;
 import com.dictionaryapp.model.entity.Language;
 import com.dictionaryapp.model.entity.LanguageNameEnum;
+import com.dictionaryapp.model.entity.User;
 import com.dictionaryapp.model.entity.Word;
 import com.dictionaryapp.repo.LanguageRepository;
+import com.dictionaryapp.repo.UserRepository;
 import com.dictionaryapp.repo.WordRepository;
 import com.dictionaryapp.session.CurrentUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 @Service
 public class WordService {
     private final WordRepository wordRepository;
     private final LanguageRepository languageRepository;
+    private final UserRepository userRepository;
     private final CurrentUser currentUser;
-
     private final ModelMapper modelMapper;
 
-    public WordService(WordRepository wordRepository, LanguageRepository languageRepository, CurrentUser currentUser, ModelMapper modelMapper) {
+    public WordService(WordRepository wordRepository, LanguageRepository languageRepository, UserRepository userRepository, CurrentUser currentUser, ModelMapper modelMapper) {
         this.wordRepository = wordRepository;
         this.languageRepository = languageRepository;
+        this.userRepository = userRepository;
         this.currentUser = currentUser;
         this.modelMapper = modelMapper;
     }
 
-    public Long getAllWords() {
-        return this.wordRepository.count();
+    public int getAllUserWords() {
+        return this.wordRepository.findAllByAddedBy(currentUser.getId()).size();
     }
 
-    public long germanWordsCount() {
-        return languageRepository.findAllByName(LanguageNameEnum.GERMAN).get().getWords().size();
+    public int germanWordsCount() {
+        int germanWordsCounter = 0;
+        List<Word> allByAddedBy = this.wordRepository.findAllByAddedBy(currentUser.getId());
+        for (Word word : allByAddedBy) {
+            if (word.getLanguage().getName().equals(LanguageNameEnum.GERMAN)) {
+                germanWordsCounter++;
+            }
+        }
+        return germanWordsCounter;
     }
 
-    public long spanishWordsCount() {
-        return languageRepository.findAllByName(LanguageNameEnum.SPANISH).get().getWords().size();
+    public int spanishWordsCount() {
+        int spanishWordsCounter = 0;
+        List<Word> allByAddedBy = this.wordRepository.findAllByAddedBy(currentUser.getId());
+        for (Word word : allByAddedBy) {
+            if (word.getLanguage().getName().equals(LanguageNameEnum.SPANISH)) {
+                spanishWordsCounter++;
+            }
+        }
+        return spanishWordsCounter;
     }
 
-    public long frenchWordsCount() {
-        return languageRepository.findAllByName(LanguageNameEnum.FRENCH).get().getWords().size();
+    public int frenchWordsCount() {
+        int frenchWordsCounter = 0;
+        List<Word> allByAddedBy = this.wordRepository.findAllByAddedBy(currentUser.getId());
+        for (Word word : allByAddedBy) {
+            if (word.getLanguage().getName().equals(LanguageNameEnum.FRENCH)) {
+                frenchWordsCounter++;
+            }
+        }
+        return frenchWordsCounter;
     }
 
-    public long italianWordsCount() {
-//        List<Word> allByLanguageName = wordRepository.findAllByLanguage_Name(LanguageNameEnum.ITALIAN);
-//
-//        long counter = 0;
-//        for (int i = 0; i < allByLanguageName.size(); i++) {
-//            counter++;
-//        }
-//        return counter;
-//       return wordRepository.findAllByLanguage_Name(LanguageNameEnum.ITALIAN)
-//                .stream().map(l -> l.getLanguage().getWords()).count();
-        return languageRepository.findAllByName(LanguageNameEnum.ITALIAN).get().getWords().size();
+    public int italianWordsCount() {
+        int italianWordsCounter = 0;
+        List<Word> allByAddedBy = this.wordRepository.findAllByAddedBy(currentUser.getId());
+        for (Word word : allByAddedBy) {
+            if (word.getLanguage().getName().equals(LanguageNameEnum.ITALIAN)) {
+                italianWordsCounter++;
+            }
+        }
+        return italianWordsCounter;
     }
 
-    public List<Language> getAllLanguages() {
-        return this.wordRepository.findAllByAddedBy(currentUser.getId()).stream().map(Word::getLanguage).collect(Collectors.toList());
-    }
 
     public void addWord(AddWordDTO addWordDTO) {
-        this.currentUser.getWords().add(this.modelMapper.map(addWordDTO, Word.class));
+        Optional<User> byUsername = this.userRepository.findByUsername(currentUser.getUsername());
+        Language byName = this.languageRepository.findByName(addWordDTO.getLanguage());
+
+        if (byUsername.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+
+        List<Word> allByAddedBy = this.wordRepository.findAllByAddedBy(currentUser.getId());
+        Word word = new Word();
+        word.setTerm(addWordDTO.getTerm());
+        word.setTranslation(addWordDTO.getTranslation());
+        word.setExample(addWordDTO.getExample());
+        word.setInputDate(addWordDTO.getInputDate());
+        word.setLanguage(byName);
+
+        allByAddedBy.add(word);
+        this.wordRepository.save(word);
     }
 }

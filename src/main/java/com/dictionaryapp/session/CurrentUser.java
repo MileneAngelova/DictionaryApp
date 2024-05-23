@@ -1,10 +1,10 @@
 package com.dictionaryapp.session;
 
-import com.dictionaryapp.model.dto.WordDTO;
 import com.dictionaryapp.model.entity.Word;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Component
@@ -18,6 +18,9 @@ public class CurrentUser {
 
     private Set<Word> words;
 
+    public CurrentUser() {
+        this.words = new HashSet<>();
+    }
 
     public Long getId() {
         return id;

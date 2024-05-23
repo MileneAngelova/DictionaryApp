@@ -22,7 +22,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "addedBy", targetEntity = Word.class, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "addedBy", targetEntity = Word.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Word> words;
 
 

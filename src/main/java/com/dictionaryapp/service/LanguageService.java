@@ -44,9 +44,10 @@ public class LanguageService {
             }
         }
     }
-//
-//    public List<LanguageNameEnum> getAllLanguages() {
+
+    public List<LanguageNameEnum> getAllLanguages() {
 //        return currentUser.getWords().stream().map(w -> w.getLanguage().getName()).collect(Collectors.toList());
-//    }
+    return this.languageRepository.findAll().stream().map(Language::getName).collect(Collectors.toList());
+    }
 
 }

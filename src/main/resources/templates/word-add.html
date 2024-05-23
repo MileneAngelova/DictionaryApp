@@ -91,11 +91,12 @@
             <select class="browser-default custom-select"
                     id="language"
                     name="language"
-            th:field="*{language}">
+                    th:field="*{language}"
+                    th:errorclass="is-invalid">
                 <option value="">Select language</option>
                 <option th:each="language : ${languages}"
-                        th:value="${language.getName()}"
-                        th:text="${language.getName()}">
+                        th:value="${language}"
+                        th:text="${language}">
                 </option>
             </select>
 

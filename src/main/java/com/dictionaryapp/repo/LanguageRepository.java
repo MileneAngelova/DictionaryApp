@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface LanguageRepository extends JpaRepository<Language, Long> {
     Optional<Language> findAllByName(LanguageNameEnum languageNameEnum);
 
+  Language findByName(LanguageNameEnum name);
 }

@@ -1,5 +1,6 @@
 package com.dictionaryapp.model.dto;
 
+import com.dictionaryapp.model.entity.Language;
 import com.dictionaryapp.model.entity.LanguageNameEnum;
 import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,7 +20,7 @@ public class AddWordDTO {
     @Size(min = 2, max = 200, message = "The example length must be between 2 and 200 characters!")
     private String example;
 
-    @NotNull(message = "You must select a language!")
+    @NotNull(message = "You must select a date!")
     @PastOrPresent(message = "The date can not be in the future!")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate inputDate;

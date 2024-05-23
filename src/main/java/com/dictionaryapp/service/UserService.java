@@ -55,4 +55,8 @@ public class UserService {
     public void logout() {
         this.currentUser.logout();
     }
+
+    public Long getUserId() {
+        return this.currentUser.getId();
+    }
 }
