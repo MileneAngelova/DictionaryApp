@@ -44,7 +44,7 @@ public class UserService {
 
         if (optUser.isPresent() && optUser.get().getPassword().equals(loginDTO.getPassword())) {
             currentUser.setUsername(loginDTO.getUsername());
-          currentUser.setLoggedIn(true);
+            currentUser.setLoggedIn(true);
         }
     }
 
