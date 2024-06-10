@@ -1,84 +1,85 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/commons::head}"></head>
+<head th:replace="fragments/commons::head"></head>
 <body>
-<header th:replace="~{fragments/commons::nav}"></header>
+<header th:replace="fragments/commons::nav"></header>
 <main>
+    <div class="container bg-blur rounded mt-1 mb-4">
+        <h6 class="bg-gray text-dark mb-0 mt-0">Welcome, {username}</h6>
+        <div class="row mt-1 mb-2">
+            <div class="col-6 mt-1 mb-1">
 
-    <div class="container bg-blur rounded mt-3 mb-4"
-         th:action="@{/home}"
-         th:method="post"
-         th:object="${wordModel}">
-        <h1>All words</h1>
-        <div class="row mt-3 mb-3">
+                <div>
+                    <h3 class="mySticky bg-gray text-dark  mb-0 mt-2">Desserts ({count})</h3>
+                    <div class="bg-dark rounded m-auto" style="height: 31vh; overflow: auto">
+                        <table class="table table-striped table-dark">
+                            <tr>
+                                <td class="bg-warning" scope="row" style="width: 5%">
+                                    <img class="mr-2 " src="/img/dessert.png" alt="Dessert" width="35px" height="35px">
+                                </td>
+                                <td>{name}</td>
+                                <td>{ingredients}</td>
+                                <td><a href="/"><img class="mr-2 " src="/img/add-to-favourites.png" alt="Dessert" width="35px" height="35px"></a></td>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
 
-            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">
-                <h3 class="mySticky bg-gray text-dark rounded">German: <span th:text="${germanWordsCounter}"/> words
-                </h3>
-                <div class="mt-3 rounded badge-warning" th:if="${germanWordsCounter > 0}"
-                     th:each="word : ${allWords}">
-                    <img class="mr-2" src="/img/german.png" alt="Flag" width="20px" height="20px">
-                    <span th:text="${word.term}"/>
-                    : <span th:text="${word.getTranslation()}"/>
-                    <br>
-                    <span>Example: <span th:text="${word.getExample()}"/>
-                    </span>>
-                    <br>
-                    <span>Added by: <span th:text="${word.getAddedBy()}"/> on <span
-                            th:text="${word.getInputDate()}"/>
-                    </span>
-                    <a class="ml-3 text-danger" href="/">Remove</a>
+                <div>
+                    <h3 class="mySticky bg-gray text-dark  mb-0 mt-2">Cocktails ({count})</h3>
+                    <div class="bg-dark rounded m-auto" style="height: 31vh; overflow: auto">
+                        <table class="table table-striped table-dark">
+                            <tr>
+                                <td class="bg-success" scope="row" style="width: 5%">
+                                    <img class="mr-2 " src="/img/cocktail.png" alt="Cocktail" width="35px"
+                                         height="35px">
+                                </td>
+                                <td>{name}</td>
+                                <td>{ingredients}</td>
+                                <td><a href="/"><img class="mr-2 " src="/img/add-to-favourites.png" alt="Cocktail" width="35px" height="35px"></a></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">
-                <h3 class="mySticky bg-gray text-dark rounded">Spanish: <span th:text="${spanishWordsCounter}"/> words
-                </h3>
-                <div class="mt-3 rounded badge-secondary" th:if="${spanishWordsCounter > 0}">
-                    <img class="mr-2" src="/img/spanish.png" alt="Flag" width="20px" height="20px">
-                    <span>{spanishTerm}: {translation}</span>
-                    <br>
-                    <span>Example: {example}</span>
-                    <br>
-                    <span>Added by: {username} on {inputDate}</span>
-                    <a class="ml-3 text-danger" href="/">Remove</a>
+            <div class="col-6 mt-1 mb-1">
+                <div>
+                    <h3 class="mySticky bg-gray text-dark  mb-0 mt-2">Main Dishes ({count})</h3>
+                    <div class="bg-dark rounded m-auto" style="height: 31vh; overflow: auto">
+                        <table class="table table-striped table-dark">
+                            <tr>
+                                <td class="bg-info" scope="row" style="width: 5%">
+                                    <img class="mr-2 " src="/img/main-dish.png" alt="Main-Dish" width="35px" height="35px">
+                                </td>
+                                <td>{name}</td>
+                                <td>{ingredients}</td>
+                                <td><a href="/"><img class="mr-2 " src="/img/add-to-favourites.png" alt="Main-Dish" width="35px" height="35px"></a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="mySticky bg-gray text-dark  mb-0 mt-2">Favourites ({count})</h3>
+                    <div class="bg-dark rounded m-auto" style="height: 31vh; overflow: auto">
+                        <table class="table table-striped table-dark">
+                            <tr>
+                                <td class="bg-primary" scope="row" style="width: 5%">
+                                    <img class="mr-2 " src="/img/star.png" alt="Star" width="35px" height="35px">
+                                </td>
+                                <td>{name}</td>
+                                <td>{ingredients}</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="row mt-3 mb-3">
-            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">
-                <h3 class="mySticky bg-gray text-dark rounded">French: <span th:text="${frenchWordsCounter}"/> words
-                </h3>
-                <div class="mt-3 rounded badge-info" th:if="${frenchWordsCounter > 0}">
-                    <img class="mr-2" src="/img/french.png" alt="Flag" width="20px" height="20px">
-                    <span>{frenchTerm}: {translation}</span>
-                    <br>
-                    <span>Example: {example}</span>
-                    <br>
-                    <span>Added by: {username} on {inputDate}</span>
-                    <a class="ml-3 text-danger" href="/">Remove</a>
-                </div>
-            </div>
-
-            <div class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">
-                <h3 class="mySticky bg-gray text-dark rounded">Italian: <span th:text="${italianWordsCounter}"/> words
-                </h3>
-                <div class="mt-3 rounded badge-success" th:if="${italianWordsCounter > 0}">
-                    <img class="mr-2" src="/img/italian.png" alt="Flag" width="20px" height="20px">
-                    <span>{italianTerm}: {translation}</span>
-                    <br>
-                    <span>Example: {example}</span>
-                    <br>
-                    <span>Added by: {username} on {inputDate}</span>
-                    <a class="ml-3 text-danger" href="/">Remove</a>
-                </div>
-            </div>
-        </div>
-        <a href="/home/remove-all" class="btn btn-danger">Remove all <span th:text="${countAllWords}"/> words</a>
     </div>
 </main>
-<footer th:replace="~{fragments/commons::footer}"></footer>
+<footer th:replace="fragments/commons::footer"></footer>
 </body>
 </html>
