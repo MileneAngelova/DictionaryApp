@@ -4,29 +4,34 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Bon App-étit</title>
+    <title>Dictionary App</title>
     <link rel="stylesheet" href="/css/reset-css.css"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg bg-nav rounded">
-        <a class="nav-link text-primary active h5 text-stroke" href="/">Bon App-étit</a>
-        <a class="nav-link text-primary active h5 text-stroke" href="/recipe/add">Add Recipe</a>
-
+    <nav class="navbar navbar-expand-lg bg-nav rounded" >
+        <a class="nav-link my-text-color active h5 " th:unless="${@currentUser.isLoggedIn()}" href="/">Dictionary App</a>
+        <a class="nav-link my-text-color active h5" th:if="${@currentUser.isLoggedIn()}" href="/home">Home</a>
+        <a class="nav-link my-text-color active h5" th:if="${@currentUser.isLoggedIn()}" href="/word/add">Add Word</a>
         <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
             <ul class="navbar-nav row">
                 <li class="nav-item col-md-4">
-                    <a class="nav-link text-primary active h5 text-stroke" href="/login">Login</a>
+                    <a class="nav-link active h5 my-text-color" th:unless="${@currentUser.isLoggedIn()}" href="/login">Login</a>
                 </li>
 
                 <li class="nav-item col-md-4">
-                    <a class="nav-link text-primary active h5 text-stroke" href="/register">Register</a>
+                    <a class="nav-link my-text-color active h5 " th:unless="${@currentUser.isLoggedIn()}" href="/register">Register</a>
                 </li>
 
+                    <a class="nav-link h5 my-text-color"
+                    th:if="${@currentUser.isLoggedIn()}"
+                    >Welcome,
+                    <span th:text="${@currentUser.username}"></span>
+                    </a>
                 <li class="nav-item col-md-4">
-                    <a class="nav-link text-primary active h5 text-stroke" href="/">Logout</a>
+                    <a class="nav-link my-text-color active h5 " th:if="${@currentUser.isLoggedIn()}" href="/logout">Logout</a>
                 </li>
             </ul>
         </div>
@@ -34,7 +39,7 @@
 </header>
 <footer class="footer bg-transparent  py-2">
     <div class="container-fluid text-center">
-        <div class="footer-background h5 text-primary text-stroke fixed-bottom">
+        <div class="footer-background h5 my-text-color">
             &copy; Spring team 2023. All rights reserved.
         </div>
     </div>

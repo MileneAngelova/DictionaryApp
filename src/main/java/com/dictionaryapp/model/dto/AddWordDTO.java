@@ -1,6 +1,5 @@
 package com.dictionaryapp.model.dto;
 
-import com.dictionaryapp.model.entity.Language;
 import com.dictionaryapp.model.entity.LanguageNameEnum;
 import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -8,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 public class AddWordDTO {
+    private Long id;
     @NotBlank(message = "This field can not be empty.")
     @Size(min = 2, max = 40, message = "The term length must be between 2 and 40 characters!")
     private String term;
@@ -70,6 +70,15 @@ public class AddWordDTO {
 
     public AddWordDTO setLanguage(LanguageNameEnum language) {
         this.language = language;
+        return this;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public AddWordDTO setId(Long id) {
+        this.id = id;
         return this;
     }
 }

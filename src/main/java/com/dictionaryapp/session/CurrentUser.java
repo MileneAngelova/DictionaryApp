@@ -63,5 +63,4 @@ public class CurrentUser {
         this.words = words;
         return this;
     }
-
 }

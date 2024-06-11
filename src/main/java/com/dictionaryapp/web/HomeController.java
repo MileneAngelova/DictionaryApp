@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -42,27 +43,38 @@ public class HomeController {
             return "redirect:/";
         }
 
-        long countAllWords = this.wordService.allWordsCount();
+
         List<Word> allWords = this.wordService.getAllWords();
 
-        long germanWordsCounter = this.wordService.germanWordsCount();
-        long spanishWordsCounter = this.wordService.spanishWordsCount();
-        long frenchWordsCounter = this.wordService.frenchWordsCount();
-        long italianWordsCounter = this.wordService.italianWordsCount();
+        List<Word> germanWords = this.wordService.germanWords();
+        List<Word> spanishWords = this.wordService.spanishWords();
+        List<Word> frenchWords = this.wordService.frenchWordsCount();
+        List<Word> italianWords = this.wordService.italianWords();
 
-        model.addAttribute("countAllWords", countAllWords);
-        model.addAttribute("germanWordsCounter", germanWordsCounter);
-        model.addAttribute("spanishWordsCounter", spanishWordsCounter);
-        model.addAttribute("frenchWordsCounter", frenchWordsCounter);
-        model.addAttribute("italianWordsCounter", italianWordsCounter);
+        model.addAttribute("germanWords", germanWords);
+        model.addAttribute("spanishWords", spanishWords);
+        model.addAttribute("frenchWords", frenchWords);
+        model.addAttribute("italianWords", italianWords);
         model.addAttribute("allWords", allWords);
 
         return "/home";
     }
 
-    @GetMapping("/logout")
-    public String logout() {
-        this.userService.logout();
-        return "redirect:/";
+    @GetMapping("/home/delete-word/{id}")
+    public String deleteSingleWord(@PathVariable Long id) {
+        if (!this.userService.isLoggedIn()) {
+            return "redirect:/";
+        }
+        this.wordService.deleteSingleWord(id);
+        return "redirect:/home";
+    }
+
+    @GetMapping("/home/remove-all")
+    public String removeAllWords() {
+        if (!this.userService.isLoggedIn()) {
+            return "redirect:/";
+        }
+        this.wordService.deleteAllWords();
+        return "redirect:/home";
     }
 }

@@ -11,10 +11,12 @@ import com.dictionaryapp.repo.WordRepository;
 import com.dictionaryapp.session.CurrentUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -34,32 +36,24 @@ public class WordService {
         this.modelMapper = modelMapper;
     }
 
-    public long allWordsCount() {
-        return this.wordRepository.count();
-    }
-
     public List<Word> getAllWords() {
         return this.wordRepository.findAll();
     }
 
-    public long germanWordsCount() {
-        List<Word> germanWords = this.wordRepository.findAllByLanguage_Name(LanguageNameEnum.GERMAN);
-        return germanWords.size();
+    public List<Word> germanWords() {
+        return this.wordRepository.findAllByLanguage_Name(LanguageNameEnum.GERMAN);
     }
 
-    public int spanishWordsCount() {
-        List<Word> spanishWords = this.wordRepository.findAllByLanguage_Name(LanguageNameEnum.SPANISH);
-        return spanishWords.size();
+    public List<Word> spanishWords() {
+        return this.wordRepository.findAllByLanguage_Name(LanguageNameEnum.SPANISH);
     }
 
-    public int frenchWordsCount() {
-        List<Word> frenchWords = this.wordRepository.findAllByLanguage_Name(LanguageNameEnum.FRENCH);
-        return frenchWords.size();
+    public List<Word> frenchWordsCount() {
+        return this.wordRepository.findAllByLanguage_Name(LanguageNameEnum.FRENCH);
     }
 
-    public int italianWordsCount() {
-        List<Word> italianWords = this.wordRepository.findAllByLanguage_Name(LanguageNameEnum.GERMAN);
-        return italianWords.size();
+    public List<Word> italianWords() {
+        return this.wordRepository.findAllByLanguage_Name(LanguageNameEnum.ITALIAN);
     }
 
     public void addWord(AddWordDTO addWordDTO) {
@@ -71,7 +65,7 @@ public class WordService {
         }
 
         User addedBy = this.modelMapper.map(byUsername, User.class);
-        List<Word> allByAddedBy = this.wordRepository.findAllByAddedBy(currentUser.getId());
+        List<Word> allByAddedBy = this.wordRepository.getAllByAddedBy(currentUser.getId());
         Word word = new Word();
 
         word.setTerm(addWordDTO.getTerm());
@@ -81,13 +75,25 @@ public class WordService {
         word.setAddedBy(addedBy);
         word.setLanguage(byName);
 
-        System.out.println(currentUser.getId());
-        System.out.println(currentUser.getUsername());
         allByAddedBy.add(word);
         this.wordRepository.save(word);
+        this.userRepository.save(addedBy);
     }
 
-    public void deleteSingleWord(Word word) {
-        this.wordRepository.delete(word);
+    @Transactional
+    public void deleteSingleWord(Long id) {
+        Word wordToDelete = wordRepository.findById(id).orElse(null);
+        User user = wordToDelete.getAddedBy();
+        Set<Word> allUserWords = user.getWords();
+        allUserWords.remove(wordToDelete);
+        this.userRepository.save(user);
+        this.wordRepository.deleteById(id);
+    }
+    @Transactional
+    public void deleteAllWords() {
+//        this.userRepository.findAll()
+//                .stream().map(User::getWords)
+//                .forEach(this.wordRepository::deleteAll);
+        this.wordRepository.deleteAll();
     }
 }

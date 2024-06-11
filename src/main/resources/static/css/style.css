@@ -7,7 +7,7 @@
 }
 
 .bg-nav{
-    background-color: rgba(1, 141, 8, 0);
+    background-color: rgba(0, 0, 0, 27%);
 }
 
 
@@ -24,7 +24,7 @@ textarea {
 }
 
 footer {
-    position: static;
+    position: fixed;
     bottom: 0;
     width: 100%;
 }
@@ -55,7 +55,7 @@ footer {
 }
 
 .container{
-
+    width: 90%;
 }
 
 .text-stroke{
@@ -66,10 +66,13 @@ footer {
             0 -0.07em white;
 }
 
-.text-primary{
-    color: #1a00e4!important;
+.my-text-color{
+    color: yellow!important;
 }
 
-.table td, .table th {
-    padding: 0.15rem;
+#big-div{
+}
+
+.badge-secondary{
+    background-color: #720a75;
 }

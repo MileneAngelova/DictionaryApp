@@ -2,6 +2,7 @@ package com.dictionaryapp.model.dto;
 
 import com.dictionaryapp.validation.FieldsMatch;
 import com.dictionaryapp.validation.UniqueUserEmail;
+import com.dictionaryapp.validation.UniqueUsername;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -10,6 +11,7 @@ import jakarta.validation.constraints.Size;
 public class RegisterDTO {
     @NotBlank(message = "Username must not be empty")
     @Size(min = 3, max = 20, message = "Username must be between 3 and 20")
+    @UniqueUsername(message = "The username already exists.")
     private String username;
 
     @NotBlank(message = "The field must not be empty")

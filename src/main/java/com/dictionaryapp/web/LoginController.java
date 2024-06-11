@@ -2,6 +2,7 @@ package com.dictionaryapp.web;
 
 import com.dictionaryapp.model.dto.LoginDTO;
 import com.dictionaryapp.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -38,13 +39,25 @@ public class LoginController {
             return "redirect:/home";
         }
 
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors() || !this.userService.userExist(loginModel.getUsername())) {
             redirectAttributes.addFlashAttribute("loginModel", loginModel);
-            redirectAttributes.addAttribute("org.springframework.validation.BindingResult.loginModel", bindingResult);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.loginModel", bindingResult);
 
             return "redirect:/login";
         }
         this.userService.login(loginModel);
         return "redirect:/home";
     }
+//    @GetMapping("/logout")
+//    public String logout() {
+//        this.userService.logout();
+//        return "redirect:/";
+//    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();
+        return "redirect:/";
+    }
+
 }

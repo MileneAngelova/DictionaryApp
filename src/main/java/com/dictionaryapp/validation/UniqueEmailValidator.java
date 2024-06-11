@@ -5,7 +5,7 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 public class UniqueEmailValidator implements ConstraintValidator<UniqueUserEmail, String> {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UniqueEmailValidator(UserRepository userRepository) {
         this.userRepository = userRepository;

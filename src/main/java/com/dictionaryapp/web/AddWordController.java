@@ -36,7 +36,6 @@ public class AddWordController {
     }
 
     @GetMapping("/word/add")
-    @Transactional
     public String addWord(Model model) {
         if (!this.userService.isLoggedIn()) {
             return "redirect:/";
