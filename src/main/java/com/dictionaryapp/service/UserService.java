@@ -35,6 +35,12 @@ public class UserService {
         return byUsername.isPresent();
     }
 
+    public boolean userFound(String username, String password) {
+        Optional<User> byUsername = this.userRepository.findByUsernameAndPassword(username, password);
+
+        return byUsername.isPresent();
+    }
+
     public void register(RegisterDTO registerDTO) {
         if (userExist(registerDTO.getEmail())) {
             throw new RuntimeException("User with email " + registerDTO.getEmail() + " already exists!");

@@ -91,9 +91,10 @@ public class WordService {
     }
     @Transactional
     public void deleteAllWords() {
-//        this.userRepository.findAll()
-//                .stream().map(User::getWords)
-//                .forEach(this.wordRepository::deleteAll);
+        this.userRepository.findAll()
+                .stream().map(User::getWords)
+                .forEach(this.wordRepository::deleteAll);
         this.wordRepository.deleteAll();
     }
+
 }

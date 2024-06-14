@@ -5,7 +5,9 @@ import com.dictionaryapp.model.entity.Word;
 import com.dictionaryapp.service.UserService;
 import com.dictionaryapp.service.WordService;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -69,7 +71,7 @@ public class HomeController {
         return "redirect:/home";
     }
 
-    @GetMapping("/home/remove-all")
+    @DeleteMapping("/home/remove-all")
     public String removeAllWords() {
         if (!this.userService.isLoggedIn()) {
             return "redirect:/";

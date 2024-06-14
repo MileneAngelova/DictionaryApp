@@ -39,7 +39,7 @@ public class LoginController {
             return "redirect:/home";
         }
 
-        if (bindingResult.hasErrors() || !this.userService.userExist(loginModel.getUsername())) {
+        if (bindingResult.hasErrors() || !this.userService.userFound(loginModel.getUsername(), loginModel.getPassword())) {
             redirectAttributes.addFlashAttribute("loginModel", loginModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.loginModel", bindingResult);
 

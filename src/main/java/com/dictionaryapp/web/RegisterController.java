@@ -45,7 +45,7 @@ public class RegisterController {
         if (this.userService.isLoggedIn()) {
             return "redirect:/home";
         }
-        this.userService.register(registerModel);
+//        this.userService.register(registerModel);
 
         return "redirect:/login";
     }
